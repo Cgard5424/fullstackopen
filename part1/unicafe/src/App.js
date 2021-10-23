@@ -52,8 +52,6 @@ const Heading = (props) => {
 }
 
 const Statistics = (props) => {
-  //console.log(props.results[0])
-  // const total = {props.results[0] + props.results[1] + props.results[2]}
   const total = props.results[0] + props.results[1] + props.results[2]
   const avg = (1*props.results[0] + -1*props.results[2]) / total
   return (
