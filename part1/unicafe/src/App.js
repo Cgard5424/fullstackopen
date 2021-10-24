@@ -52,16 +52,40 @@ const Heading = (props) => {
 }
 
 const Statistics = (props) => {
+  console.log(props)
+  if (props.results.every(item => item === 0)) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+  }
   const total = props.results[0] + props.results[1] + props.results[2]
   const avg = (1*props.results[0] + -1*props.results[2]) / total
+  const good = props.results[0]
+  const neutral = props.results[1]
+  const bad = props.results[2]
+  const posFloat = 100 * (props.results[0] / total)
+  const pos = (parseFloat(posFloat).toFixed(2)+"%")
   return (
     <div>
-      good {props.results[0]}<br></br> 
-      neutral {props.results[1]}<br></br>
-      bad {props.results[2]}<br></br>
-      all {props.results[0] + props.results[1] + props.results[2]}<br></br>
-      average {avg}<br></br>
-      positive {100 * (props.results[0] / total)} %
+
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={total} />
+      <StatisticLine text="average" value={avg} />
+      <StatisticLine text="positive" value={pos} />
+
+    </div>
+  )
+}
+
+const StatisticLine = (props) => {
+  return (
+    <div>
+      {props.text} {props.value}
+
     </div>
   )
 }
