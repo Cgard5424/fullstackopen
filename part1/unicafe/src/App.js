@@ -52,7 +52,6 @@ const Heading = (props) => {
 }
 
 const Statistics = (props) => {
-  console.log(props)
   if (props.results.every(item => item === 0)) {
     return (
       <div>
@@ -65,71 +64,30 @@ const Statistics = (props) => {
   const good = props.results[0]
   const neutral = props.results[1]
   const bad = props.results[2]
-  const posFloat = 100 * (props.results[0] / total)
-  const pos = (parseFloat(posFloat).toFixed(2)+"%")
+  const pos = 100 * (props.results[0] / total)
+
   return (
-    <div>
+    <table>
+      <tbody>
+        <StatisticLine text="good" value={good} />
+        <StatisticLine text="neutral" value={neutral} />
+        <StatisticLine text="bad" value={bad} />
+        <StatisticLine text="all" value={total} />
+        <StatisticLine text="average" value={avg.toPrecision(2)} />
+        <StatisticLine text="positive" value={pos.toPrecision(3) + " %"} />
+      </tbody>
 
-      <StatisticLine text="good" value={good} />
-      <StatisticLine text="neutral" value={neutral} />
-      <StatisticLine text="bad" value={bad} />
-      <StatisticLine text="all" value={total} />
-      <StatisticLine text="average" value={avg} />
-      <StatisticLine text="positive" value={pos} />
-
-    </div>
+    </table>
   )
 }
 
 const StatisticLine = (props) => {
   return (
-    <div>
-      {props.text} {props.value}
-
-    </div>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   )
 }
 
 export default App
-
-
-
-
-// import React from 'react'
-// const Hello = ({name, age}) => {
-//   const bornYear = () => {
-//     const yearNow = new Date().getFullYear()
-//     return yearNow - age;
-//   }
-//   return (
-//     <div>
-//       <p>Hello {name}, you are {age} years old</p>
-//       <p>
-//         So you were probably born in {bornYear()};
-//       </p>
-//     </div>
-//   )
-// }
-
-// const App = () => {
-//   const name = 'Peter';
-//   const age = 10;
-//   return (
-//     <>
-//       <h1>Greetings</h1>
-//       <Hello name="Toots" age={26 + 10}/>
-//       <Hello name={name} age={age}/>
-//       <Footer />
-//     </>
-//   )
-// }
-
-// const Footer = () => {
-//   return (
-//     <div>
-//       greeting app created by <a href="https://github.com/mluukkai">mluukkai</a>
-//     </div>
-//   )
-// }
-
-// export default App
