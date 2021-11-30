@@ -13,17 +13,18 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(() => Array(anecdotes.length).fill(0))
-  // should I create a new useState() that gets updated everytime the vote function is called? The output is the index of the highest vote count?
   const title = 'Anecdote of the day';
-  const mostVotes = 'Anecdote with most votes'
+  const mostVotesText = 'Anecdote with most votes'
 
 
   function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
-  function getMaxVotes(voteArray) {
-    return Math.max.apply(null, voteArray)
+  function getMaxVotesIndex(voteArray) {
+    const maxVal = Math.max.apply(null, voteArray)
+    const index = voteArray.indexOf(maxVal)
+    return index
   }
 
   const nextClick = () => {
@@ -40,10 +41,10 @@ const App = () => {
     <div>
       <Title title={title}/>
       {anecdotes[selected]}<br/>
-      <Votes selected={selected} votes={votes}/><br/>
+      <Votes selected={selected} votes={votes}/>
       <Button handleClick={voteIncrease} text='vote' />
       <Button handleClick={nextClick} text='next anecdote' />
-      <MostVotes mostVotes={mostVotes} voteNum={votes}/>
+      <MostVotes mostVotesText={mostVotesText} voteIndex={getMaxVotesIndex(votes)} anecdotes={anecdotes}/>
     </div>
   )
 }
@@ -57,14 +58,12 @@ const Title = (props) => {
 }
 
 const MostVotes = (props) => {
-  //console.log(getMaxVotes(props))
-  //const test = getMaxVotes(props.votes)
-  console.log(props)
   return(
-    <h1>
-      {props.mostVotes}
-      
-    </h1>
+    
+    <div>
+      <h1>{props.mostVotesText}</h1>
+      {props.anecdotes[props.voteIndex]}
+      </div>
   )
 }
 
@@ -76,21 +75,11 @@ const Button = ({handleClick, text}) => {
   )
 }
 
-// TODO: need to figure out how to save votes for every separate anecdote
-// use an array of size len(components) and update the array everytime the vote button is clicked (use selected: as the index of the array to be updated)
 const Votes = (props) => {
-  // console.log(props)
-  // console.log(props.selected)
-  // if (props.votes === 0) {
-  //   return (
-  //     <></>
-  //   )
-  // }
   return (
     <div>
       has {props.votes[props.selected]} votes
     </div>
-    
   )
 }
 
