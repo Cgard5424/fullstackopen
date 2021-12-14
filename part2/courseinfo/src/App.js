@@ -2,33 +2,43 @@ import React from 'react'
 
 const App = () => {
   const course = {
+    id: 1,
     name: 'Half Stack application development',
     parts: [
       {
         name: 'Fundamentals of React',
-        exercises: 10
+        exercises: 10,
+        id: 1
       },
       {
         name: 'Using props to pass data',
-        exercises: 7
+        exercises: 7,
+        id: 2
       },
       {
         name: 'State of a component',
-        exercises: 14
+        exercises: 14,
+        id: 3
       }
     ]
   }
 
+  return <Course course={course} />
+}
+
+const Course = ({course}) => {
+  //console.log(course)
   return (
     <div>
-      <Header course={course}/>
-      <Content course={course}/>
-      <Total course={course}/>
+      <Header course={course} />
+      <Content course={course} />
+      <Total course={course} />
     </div>
   )
 }
 
 const Header = (props) => {
+  //console.log(props)
   return (
     <div>
       <h1> {props.course.name}</h1>
@@ -36,36 +46,40 @@ const Header = (props) => {
   )
 }
 
-const Content = (props) => {
-  const part1 = props.course.parts[0];
-  const part2 = props.course.parts[1];
-  const part3 = props.course.parts[2];
+const Content = ({course}) => {
+
   return (
     <div>
-      <Part part={part1}/>
-      <Part part={part2}/>
-      <Part part={part3}/>
+      {course.parts.map(courses =>
+        <Part key={courses.id} part={courses.name} exercises={courses.exercises}
+        />
+        )}
     </div>
 
   )
 }
 
-const Total = (props) => {
-  const part1Exercise = props.course.parts[0].exercises;
-  const part2Exercise = props.course.parts[1].exercises;
-  const part3Exercise = props.course.parts[2].exercises;
+const Total = ({course}) => {
+  //console.log(course.parts)
+
+  const total = course.parts.reduce(
+    (previousValue, currentValue) => previousValue + currentValue.exercises
+    , 0
+  )
+  //console.log(total)
   return (
-    <div>
-      Number of exercises {part1Exercise + part2Exercise + part3Exercise}
-    </div>
+    <b>
+      total of {total} exercises
+    </b>
   )
 }
 
 const Part = (props) => {
+  //console.log(props)
   return (
     <div>
       <p>
-        {props.part.name} {props.part.exercises}
+        {props.part} {props.exercises}
       </p>
     </div>
   )
