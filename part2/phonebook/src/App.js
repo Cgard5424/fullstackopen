@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import Persons from './components/Persons'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -9,7 +12,6 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
-    //console.log(event.target.name)
     const nameObject = {
       name: newName,
       id: newName,
@@ -28,20 +30,17 @@ const App = () => {
 
   const numbersToShow = showAll
     ? persons
-    : persons.filter(person => person.name.includes(newFilter) === true)
+    : persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()) === true)
 
   const handleNameChange = (event) => {
-    //console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   const handleNumberChange = (event) => {
-    //console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
   const handleFilterChange = (event) => {
-    //console.log(event.target.value.length)
     if (event.target.value.length === 0) {
       //
       setShowAll(true)
@@ -57,43 +56,24 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with<input
-          value={newFilter}
-          onChange={handleFilterChange}
-        />
-      </div>
-      <h2>add a new</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input 
-            value={newName}
-            onChange={handleNameChange}
-          />
-        </div>
-        <div>
-          number: <input 
-            value={newNumber}
-            onChange={handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {numbersToShow.map(name =>
-        <Numbers key={name.id} name={name} />
-        )}
-    </div>
-  )
-}
+      
+      <Filter newFilter={newFilter} handleFilterChange={handleFilterChange}/>
 
-const Numbers = ({ name }) => {
-  //console.log(name.id)
-  return(
-    <div>
-      {name.name} {name.number}
+      <h3>add a new</h3>
+
+      <PersonForm 
+        addName={addName}
+        newName={newName}
+        handleNameChange={handleNameChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}  
+      />
+
+      <h3>Numbers</h3>
+
+      {numbersToShow.map(name =>
+        <Persons key={name.id} name={name} />
+        )}
     </div>
   )
 }
