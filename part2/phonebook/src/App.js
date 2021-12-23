@@ -5,8 +5,7 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 
 const App = () => {
-  const [numbers, setNumbers] = useState([])
-  const [persons, setPersons] = useState([]) // add the data from the server to this useState?
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
@@ -18,11 +17,10 @@ const App = () => {
       .get('http://localhost:3001/persons')
       .then(response => {
         console.log('promise fulfilled')
-        //console.log(response.data[0])
-        setNumbers(response.data)
+        setPersons(response.data)
       })
   }, [])
-  console.log('render', numbers.length, 'numbers')
+  console.log('render', persons.length, 'numbers')
 
   const addName = (event) => {
     event.preventDefault()
