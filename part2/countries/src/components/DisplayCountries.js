@@ -1,9 +1,10 @@
 import React from "react"
+import Country from "./Country"
 
-const DisplayCountries = ({filteredCountries}) => {
-    if (filteredCountries.length > 10) {
+const DisplayCountries = ({filteredCountries, newFilter}) => {
+    if (filteredCountries.length > 10 && newFilter != '') {
         return (
-            <p>Too many matches, specify another filter</p>
+            <>Too many matches, specify another filter</>
         )
     }
 
@@ -11,18 +12,21 @@ const DisplayCountries = ({filteredCountries}) => {
         return (
             <div>
                 {filteredCountries.map(country => 
-                    <div>
+                    <div key={country.name.common}>
                         {country.name.common}
                     </div>)}
             </div>
         )
     }
 
-    else {
+    else if (filteredCountries.length === 1) {
         return (
-            <p>1 country, display all info for the country</p>
-            // need to call the Country component here, then inside that component render everything
+            <Country country={filteredCountries[0]} />
         )
+    }
+
+    else {
+        return null
     }
   }
 

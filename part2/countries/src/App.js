@@ -12,7 +12,6 @@ const App = () => {
 
   useEffect(() => {
 
-    //console.log('effect')
     axios.get('https://restcountries.com/v3.1/all').then(response => {
       //console.log('promise fulfilled')
       setAllCountries(response.data)
@@ -20,8 +19,7 @@ const App = () => {
   }, [])
 
   const handleFilterChange = (event) => {
-    //setNewFilter(event.target.value)
-    //console.log(event.target.value)
+
     if (event.target.value.length === 0) {
       setNewFilter('')
     }
@@ -32,14 +30,12 @@ const App = () => {
   }
 
   const filteredCountries = allCountries.filter((country) => country.name.common.toLowerCase().includes(newFilter.toLowerCase()));
-  //console.log(filteredCountries)
 
   return (
     <div>
-      <FindCountries newFilter={newFilter} handleFilterChange={handleFilterChange}/>
+      <FindCountries newFilter={newFilter} handleFilterChange={handleFilterChange}/> 
 
-      <DisplayCountries filteredCountries={filteredCountries} />
-
+      <DisplayCountries filteredCountries={filteredCountries} newFilter={newFilter} />
 
     </div>
   )
