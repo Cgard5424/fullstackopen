@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import FindCountries from './components/FindCountries'
 import DisplayCountries from './components/DisplayCountries'
-import Button from './components/Button'
 
 const App = () => {
   
@@ -29,12 +28,8 @@ const App = () => {
   }
 
   const handleClick = (event) => {
-    console.log("Clicked", event.target.value)
     setNewFilter(event.target.value)
-
   }
-
-
 
   const filteredCountries = allCountries.filter((country) => country.name.common.toLowerCase().includes(newFilter.toLowerCase()));
 

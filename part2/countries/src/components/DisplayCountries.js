@@ -2,7 +2,7 @@ import React from "react"
 import Country from "./Country"
 import Button from "./Button"
 
-const DisplayCountries = ({filteredCountries, newFilter, setNewFilter, handleClick}) => {
+const DisplayCountries = ({filteredCountries, newFilter, handleClick}) => {
     if (filteredCountries.length > 10 && newFilter != '') {
         return (
             <>Too many matches, specify another filter</>
@@ -14,8 +14,7 @@ const DisplayCountries = ({filteredCountries, newFilter, setNewFilter, handleCli
             <div>
                 {filteredCountries.map(country => 
                     <div key={country.name.common}>
-                        {/* {country.name.common} <Button value={country.name.common} onClick={onClick}/> */}
-                        {country.name.common} <button onClick={handleClick} value={country.name.common}>show</button>
+                        {country.name.common} <Button value={country.name.common} onClick={handleClick}/>
                     </div>)}
             </div>
         )
