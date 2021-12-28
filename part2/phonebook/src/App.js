@@ -44,6 +44,15 @@ const App = () => {
     }
   }
 
+  const deletePerson = (id) => {
+    personService
+      .remove(id)
+      .then(() => {
+        const newPersons = persons.filter(p => p.id !== id)
+        setPersons(newPersons)
+      })
+  }
+
   const numbersToShow = showAll
     ? persons
     : persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()) === true)
@@ -88,7 +97,7 @@ const App = () => {
       <h3>Numbers</h3>
 
       {numbersToShow.map(name =>
-        <Persons key={name.id} name={name} />
+        <Persons key={name.id} name={name} deletePerson={() => deletePerson(name.id)}/>
         )}
     </div>
   )
