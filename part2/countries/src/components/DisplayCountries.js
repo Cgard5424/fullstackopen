@@ -3,7 +3,7 @@ import Country from "./Country"
 import Button from "./Button"
 
 const DisplayCountries = ({filteredCountries, newFilter, handleClick}) => {
-    if (filteredCountries.length > 10 && newFilter != '') {
+    if (filteredCountries.length > 10 && newFilter !== '') {
         return (
             <>Too many matches, specify another filter</>
         )

@@ -6,7 +6,6 @@ import DisplayCountries from './components/DisplayCountries'
 const App = () => {
   
   const [newFilter, setNewFilter] = useState('')
-  const [countries, setCountries] = useState([])
   const [allCountries, setAllCountries] = useState([])
 
   useEffect(() => {
@@ -37,8 +36,11 @@ const App = () => {
     <div>
       <FindCountries newFilter={newFilter} handleFilterChange={handleFilterChange}/> 
 
-      <DisplayCountries filteredCountries={filteredCountries} newFilter={newFilter} setNewFilter={setNewFilter} handleClick={handleClick}/>
-
+      <DisplayCountries
+        filteredCountries={filteredCountries} 
+        newFilter={newFilter}
+        setNewFilter={setNewFilter}
+        handleClick={handleClick}/>
     </div>
   )
 }
