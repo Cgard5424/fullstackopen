@@ -44,13 +44,15 @@ const App = () => {
     }
   }
 
-  const deletePerson = (id) => {
-    personService
+  const deletePerson = (id, name) => {
+    if (window.confirm(`Delete ${name}?`)){
+      personService
       .remove(id)
       .then(() => {
         const newPersons = persons.filter(p => p.id !== id)
         setPersons(newPersons)
       })
+    }
   }
 
   const numbersToShow = showAll
@@ -97,7 +99,7 @@ const App = () => {
       <h3>Numbers</h3>
 
       {numbersToShow.map(name =>
-        <Persons key={name.id} name={name} deletePerson={() => deletePerson(name.id)}/>
+        <Persons key={name.id} name={name} deletePerson={() => deletePerson(name.id, name.name)}/>
         )}
     </div>
   )
