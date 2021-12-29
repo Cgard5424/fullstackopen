@@ -3,6 +3,8 @@ import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import personService from './services/persons'
+import Notification from './components/Notification'
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -10,6 +12,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [newMessage, setNewMessage] = useState(null)
+  const [newMessageType, setNewMessageType] = useState('success')
 
   useEffect(() => {
     console.log('effect')
@@ -19,7 +23,6 @@ const App = () => {
         setPersons(initialPersons)
       })
   }, [])
-
 
   const addName = (event) => {
     event.preventDefault()
@@ -37,6 +40,11 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
+      
+      setNewMessage(`Added ${newName}`)
+      setTimeout(() => {
+        setNewMessage(null)
+      }, 5000)
     }
 
     else {
@@ -44,6 +52,11 @@ const App = () => {
         updateNumber(nameObject)
         setNewName('')
         setNewNumber('')
+        setNewMessageType('success')
+        setNewMessage(`Number for ${newName} has been updated`)
+        setTimeout(() => {
+          setNewMessage(null)
+      }, 5000)
       }
     }
   }
@@ -60,6 +73,13 @@ const App = () => {
           )
         )
       })
+      .catch(error => {
+        setNewMessageType('error')
+        setNewMessage(`Information of ${oldPerson.name} has already been removed from the server`)
+        setTimeout(() => {
+          setNewMessage(null)
+      }, 5000)
+      })
   }
 
   const deletePerson = (id, name) => {
@@ -70,6 +90,18 @@ const App = () => {
         const newPersons = persons.filter(p => p.id !== id)
         setPersons(newPersons)
       })
+      .catch(error => {
+        setNewMessageType('error')
+        setNewMessage(`Information of ${name} has already been removed from the server`)
+        setTimeout(() => {
+          setNewMessage(null)
+      }, 5000)
+      })
+      setNewMessageType('success')
+      setNewMessage(`${name} successfully removed from the server`)
+      setTimeout(() => {
+        setNewMessage(null)
+    }, 5000)
     }
   }
 
@@ -101,7 +133,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      
+      <Notification message={newMessage} notificationType={newMessageType}/>
       <Filter newFilter={newFilter} handleFilterChange={handleFilterChange}/>
 
       <h3>add a new</h3>
