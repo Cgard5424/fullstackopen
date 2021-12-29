@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
@@ -38,10 +37,29 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
-    } 
-    else {
-      window.alert(`${newName} is already added to phonebook`)
     }
+
+    else {
+      if (window.confirm(`${newName} is already added to phonebook. Replace the older number with a new one?`)) {
+        updateNumber(nameObject)
+        setNewName('')
+        setNewNumber('')
+      }
+    }
+  }
+
+  const updateNumber = (person_object) => {
+    const oldPerson = person_object
+
+    personService
+      .update(person_object.id, person_object)
+      .then(returnedPerson => {
+        setPersons(
+          persons.map(person => 
+            person.id !== oldPerson.id ? person : returnedPerson
+          )
+        )
+      })
   }
 
   const deletePerson = (id, name) => {
