@@ -16,7 +16,6 @@ const App = () => {
   const [newMessageType, setNewMessageType] = useState('success')
 
   useEffect(() => {
-    console.log('effect')
     personService
       .getAll()
       .then(initialPersons => {
