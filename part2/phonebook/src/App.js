@@ -27,7 +27,6 @@ const App = () => {
     event.preventDefault()
     const nameObject = {
       name: newName,
-      id: newName,
       number: newNumber
     }
 
@@ -48,6 +47,7 @@ const App = () => {
 
     else {
       if (window.confirm(`${newName} is already added to phonebook. Replace the older number with a new one?`)) {
+
         updateNumber(nameObject)
         setNewName('')
         setNewNumber('')
@@ -61,20 +61,24 @@ const App = () => {
   }
 
   const updateNumber = (person_object) => {
-    const oldPerson = person_object
+    const person = persons.find(person => person.name === newName)
+    const updatedPerson = {
+      ...person,
+      number: newNumber
+    }
 
     personService
-      .update(person_object.id, person_object)
+      .update(person.id, updatedPerson)
       .then(returnedPerson => {
         setPersons(
           persons.map(person => 
-            person.id !== oldPerson.id ? person : returnedPerson
+            person.id !== returnedPerson.id ? person : returnedPerson
           )
         )
       })
       .catch(error => {
         setNewMessageType('error')
-        setNewMessage(`Information of ${oldPerson.name} has already been removed from the server`)
+        setNewMessage(`Information of ${updatedPerson.name} has already been removed from the server`)
         setTimeout(() => {
           setNewMessage(null)
       }, 5000)
