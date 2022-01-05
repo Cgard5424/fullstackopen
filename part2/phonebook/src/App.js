@@ -23,6 +23,7 @@ const App = () => {
       })
   }, [])
 
+  // TODO: notification message is green and says added even if missing name or number, change to red
   const addName = (event) => {
     event.preventDefault()
     const nameObject = {
@@ -48,7 +49,7 @@ const App = () => {
     else {
       if (window.confirm(`${newName} is already added to phonebook. Replace the older number with a new one?`)) {
 
-        updateNumber(nameObject)
+        updateNumber()
         setNewName('')
         setNewNumber('')
         setNewMessageType('success')
@@ -60,7 +61,7 @@ const App = () => {
     }
   }
 
-  const updateNumber = (person_object) => {
+  const updateNumber = () => {
     const person = persons.find(person => person.name === newName)
     const updatedPerson = {
       ...person,
