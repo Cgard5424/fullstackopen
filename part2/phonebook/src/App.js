@@ -22,8 +22,7 @@ const App = () => {
         setPersons(initialPersons)
       })
   }, [])
-
-  // TODO: notification message is green and says added even if missing name or number, change to red
+  
   const addName = (event) => {
     event.preventDefault()
     const nameObject = {
@@ -31,7 +30,23 @@ const App = () => {
       number: newNumber
     }
 
-    if (!persons.some(person => person.name === newName)) {
+    if (!newName) {
+      setNewMessageType('error')
+      setNewMessage('Error: no name was provided')
+      setTimeout(() => {
+        setNewMessage(null)
+      }, 5000)
+    }
+
+    else if (!newNumber) {
+      setNewMessageType('error')
+      setNewMessage('Error: no number was provided')
+      setTimeout(() => {
+        setNewMessage(null)
+      }, 5000)
+    }
+
+    else if (!persons.some(person => person.name === newName)) {
       personService
         .create(nameObject)
         .then(returnedPerson => {
@@ -39,7 +54,7 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
-      
+      setNewMessageType('success')
       setNewMessage(`Added ${newName}`)
       setTimeout(() => {
         setNewMessage(null)
