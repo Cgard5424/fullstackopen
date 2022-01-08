@@ -22,7 +22,7 @@ const App = () => {
         setPersons(initialPersons)
       })
   }, [])
-  
+
   const addName = (event) => {
     event.preventDefault()
     const nameObject = {
@@ -53,6 +53,13 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+        })
+        .catch(error => {
+          setNewMessageType('error')
+          setNewMessage(error.response.data.error)
+          setTimeout(() => {
+            setNewMessage(null)
+          }, 5000)
         })
       setNewMessageType('success')
       setNewMessage(`Added ${newName}`)
