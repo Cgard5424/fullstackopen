@@ -68,7 +68,6 @@ const App = () => {
         })
     }
 
-    // need to turn on mongoose validators (off by default for updates)
     else {
       if (window.confirm(`${newName} is already added to phonebook. Replace the older number with a new one?`)) {
         updateNumber()
@@ -78,7 +77,7 @@ const App = () => {
         setNewMessage(`Number for ${newName} has been updated`)
         setTimeout(() => {
           setNewMessage(null)
-      }, 5000)
+        }, 5000)
       }
     }
   }
@@ -94,43 +93,41 @@ const App = () => {
       .update(person.id, updatedPerson)
       .then(returnedPerson => {
         setPersons(
-          persons.map(person => 
+          persons.map(person =>
             person.id !== returnedPerson.id ? person : returnedPerson
           )
         )
       })
-      // need to have differnt error messages; one for removed from server, another for the update number/name is less than required minimum
       .catch(error => {
         console.log(error.response.data.error)
         setNewMessageType('error')
-        //setNewMessage(`Information of ${updatedPerson.name} has already been removed from the server`)
         setNewMessage(error.response.data.error)
         setTimeout(() => {
           setNewMessage(null)
-      }, 5000)
+        }, 5000)
       })
   }
 
   const deletePerson = (id, name) => {
     if (window.confirm(`Delete ${name}?`)){
       personService
-      .remove(id)
-      .then(() => {
-        const newPersons = persons.filter(p => p.id !== id)
-        setPersons(newPersons)
-        setNewMessageType('success')
-        setNewMessage(`${name} successfully removed from the server`)
-        setTimeout(() => {
-          setNewMessage(null)
-      }, 5000)
-      })
-      .catch(error => {
-        setNewMessageType('error')
-        setNewMessage(`Information of ${name} has already been removed from the server`)
-        setTimeout(() => {
-          setNewMessage(null)
-      }, 5000)
-      })
+        .remove(id)
+        .then(() => {
+          const newPersons = persons.filter(p => p.id !== id)
+          setPersons(newPersons)
+          setNewMessageType('success')
+          setNewMessage(`${name} successfully removed from the server`)
+          setTimeout(() => {
+            setNewMessage(null)
+          }, 5000)
+        })
+        .catch(error => {
+          setNewMessageType('error')
+          setNewMessage(`Information of ${name} has already been removed from the server`)
+          setTimeout(() => {
+            setNewMessage(null)
+          }, 5000)
+        })
     //   setNewMessageType('success')
     //   setNewMessage(`${name} successfully removed from the server`)
     //   setTimeout(() => {
@@ -161,30 +158,29 @@ const App = () => {
       setShowAll(false)
       setNewFilter(event.target.value)
     }
-    
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
       <Notification message={newMessage} notificationType={newMessageType}/>
-      <Filter newFilter={newFilter} handleFilterChange={handleFilterChange}/>
+      <Filter newFilter={newFilter} handleFilterChange={ handleFilterChange }/>
 
       <h3>add a new</h3>
 
-      <PersonForm 
+      <PersonForm
         addName={addName}
         newName={newName}
         handleNameChange={handleNameChange}
         newNumber={newNumber}
-        handleNumberChange={handleNumberChange}  
+        handleNumberChange={handleNumberChange}
       />
 
       <h3>Numbers</h3>
 
       {numbersToShow.map(name =>
         <Persons key={name.id} name={name} deletePerson={() => deletePerson(name.id, name.name)}/>
-        )}
+      )}
     </div>
   )
 }
