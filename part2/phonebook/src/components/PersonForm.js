@@ -1,24 +1,30 @@
 import React from "react"
+import { Form, Button } from 'react-bootstrap'
 
 const PersonForm = (props) => {
     return(
-      <form onSubmit={props.addName}>
-        <div>
-          name: <input 
-            value={props.newName}
-            onChange={props.handleNameChange}
-          />
-        </div>
-        <div>
-          number: <input 
-            value={props.newNumber}
-            onChange={props.handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <div>
+        <Form onSubmit={props.addName}>
+          <Form.Group>
+            <Form.Label>name:</Form.Label>
+            <Form.Control
+              type="text"
+              value={props.newName}
+              onChange={props.handleNameChange}
+              //name="username"
+            />
+            <Form.Label>number:</Form.Label>
+            <Form.Control
+              type="text"
+              value={props.newNumber}
+              onChange={props.handleNumberChange}
+            />
+            <Button variant="primary" type="submit">
+              add
+            </Button>
+          </Form.Group>
+        </Form>
+      </div>
     )
   }
 

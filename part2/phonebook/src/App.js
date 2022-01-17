@@ -128,11 +128,6 @@ const App = () => {
             setNewMessage(null)
           }, 5000)
         })
-    //   setNewMessageType('success')
-    //   setNewMessage(`${name} successfully removed from the server`)
-    //   setTimeout(() => {
-    //     setNewMessage(null)
-    // }, 5000)
     }
   }
 
@@ -161,12 +156,12 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h2>Phonebook</h2>
+    <div className='App'>
+      <h2 className='title'>Phonebook</h2>
       <Notification message={newMessage} notificationType={newMessageType}/>
       <Filter newFilter={newFilter} handleFilterChange={ handleFilterChange }/>
 
-      <h3>add a new</h3>
+      <h3 className='headers'>Add a new:</h3>
 
       <PersonForm
         addName={addName}
@@ -176,8 +171,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
 
-      <h3>Numbers</h3>
-
+      <h3 className='headers'>Numbers</h3>
       {numbersToShow.map(name =>
         <Persons key={name.id} name={name} deletePerson={() => deletePerson(name.id, name.name)}/>
       )}

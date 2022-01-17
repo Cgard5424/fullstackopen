@@ -1,12 +1,17 @@
 import React from "react"
+import { Form } from 'react-bootstrap'
 
 const Filter = (props) => {
     return(
       <div>
-        filter shown with<input
+        <Form>
+          <Form.Label>filter names shown with:</Form.Label>
+          <Form.Control
+            type="text"
             value={ props.newFilter }
-            onChange={ props.handleFilterChange }
-        />
+            onChange={ props.handleFilterChange}
+          />
+        </Form>
       </div>
     )
   }
